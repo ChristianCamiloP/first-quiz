@@ -19,8 +19,12 @@
 # vegetarian integer
 
 sql_create_favorite_foods = """
-
-Your SQL here.
+CREATE TABLE favorite_foods (
+  food_id INTEGER PRIMARY KEY,
+  name TEXT,
+  vegetarian INTEGER
+);
+"""
 
 """
 
@@ -29,9 +33,9 @@ Your SQL here.
 # The test suite will verify the new changes by inserting some new rows. 
 
 sql_alter_tables_with_favorite_food = """
-
-Your SQL here.
-
+ALTER TABLE people ADD COLUMN favorite_food_id INTEGER;
+ALTER TABLE animals ADD COLUMN favorite_food_id INTEGER;
+"""
 """
 
 # Part 5.C:
@@ -39,7 +43,14 @@ Your SQL here.
 # THe output should be a list of tuples in the format: (<pet name>, <food name>)
 
 sql_select_all_vegetarian_pets = """
-
-Your SQL here.
+SELECT p.name, f.name
+FROM people AS p
+INNER JOIN favorite_foods AS f ON p.favorite_food_id = f.food_id
+UNION
+SELECT a.name, f.name
+FROM animals AS a
+INNER JOIN favorite_foods AS f ON a.favorite_food_id = f.food_id
+WHERE f.vegetarian = 1;
+"""
 
 """
